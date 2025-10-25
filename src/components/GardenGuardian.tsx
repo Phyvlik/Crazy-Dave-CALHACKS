@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { Leaf, Shield, Volume2, VolumeX } from 'lucide-react';
 import { playGardenSound, playSongFromText, GardenResponse } from '../services/fishAudio';
 import { analyzeWithWordware } from '../services/wordware';
-import { transcribeAudio } from '../services/speechRecognition';
+import type { WordwareAnalysis } from '../services/wordware';
+import { transcribeAudio, detectAnimal } from '../services/speechRecognition';
 
 const GardenGuardian: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedMode, setSelectedMode] = useState<'grow' | 'guard'>('grow');
   const [isProcessing, setIsProcessing] = useState(false);
   const [lastDetectedSound, setLastDetectedSound] = useState<{ mode: 'grow' | 'guard' | null, confidence: number }>({ mode: null, confidence: 0 });
+  const [transcriptionDisplay, setTranscriptionDisplay] = useState<{ transcript: string; animalType: string; meaning: string; confidence: number } | null>(null);
+  const [latestAnalysis, setLatestAnalysis] = useState<WordwareAnalysis | null>(null);
 
   const startRecording = async () => {
     try {
@@ -20,48 +23,13 @@ const GardenGuardian: React.FC = () => {
       const mediaRecorder = new MediaRecorder(stream);
       const audioChunks: Blob[] = [];
 
-      // SpeechRecognition for live transcription (if available)
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      let recognition: any = null;
-      let transcript = '';
-
-      if (SpeechRecognition) {
-        recognition = new SpeechRecognition();
-        recognition.lang = 'en-US';
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
-
-        recognition.onresult = (event: any) => {
-          let interim = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
-            const res = event.results[i];
-            if (res.isFinal) {
-              transcript += res[0].transcript + ' ';
-            } else {
-              interim += res[0].transcript;
-            }
-          }
-          console.log('Interim transcript:', interim);
-        };
-
-        recognition.onerror = (e: any) => console.warn('SpeechRecognition error:', e);
-        recognition.start();
-      }
+      // We'll use the blob-based transcription (transcribeAudio) after recording finishes.
 
       mediaRecorder.ondataavailable = (event) => {
         audioChunks.push(event.data);
       };
 
       mediaRecorder.onstop = async () => {
-        // Stop recognition if running
-        try {
-          if (recognition) {
-            recognition.stop();
-          }
-        } catch (e) {
-          // ignore
-        }
-
         // Release microphone
         stream.getTracks().forEach(track => track.stop());
 
@@ -70,22 +38,28 @@ const GardenGuardian: React.FC = () => {
         const audioUrl = URL.createObjectURL(audioBlob);
         console.log('Recorded audio URL:', audioUrl);
 
-        console.log('Audio recorded');
+  console.log('Audio recorded');
 
-        // First, try to transcribe the sound
-        const transcript = await transcribeAudio(audioBlob);
-        console.log('Transcribed sound as:', transcript);
+  // First, try to transcribe the sound from the recorded blob
+  const transcriptText = await transcribeAudio(audioBlob);
+  console.log('Transcribed sound as:', transcriptText);
 
-        // Then analyze with Wordware to get our scientific response
-        const analysis = await analyzeWithWordware(transcript);
-        console.log('Wordware analysis:', analysis);
+  // Detect probable animal type from the transcript
+  const detected = detectAnimal(transcriptText);
+  console.log('Detected animal from transcript:', detected);
+  setTranscriptionDisplay({ transcript: transcriptText, animalType: detected.animalType, meaning: detected.meaning, confidence: detected.confidence });
+
+  // Then analyze with Wordware to get our scientific response
+  const analysis = await analyzeWithWordware(transcriptText);
+  console.log('Wordware analysis:', analysis);
+  setLatestAnalysis(analysis);
 
         // Set the mode based on the frequency ranges in the analysis
         const detectedMode = analysis.growthFrequency < 5000 ? 'grow' : 'guard';
         setSelectedMode(detectedMode);
 
         // Update last detected sound
-        setLastDetectedSound({ 
+        setLastDetectedSound({
           mode: detectedMode,
           confidence: detectedMode === 'grow' ? 0.8 : 0.9 // High confidence in our scientific analysis!
         });
@@ -102,8 +76,8 @@ const GardenGuardian: React.FC = () => {
         // Play the AI botanist's explanation followed by the frequency
         await playGardenSound(gardenResponse);
 
-        // After the frequency, play a short song based on the transcribed sound
-        await playSongFromText(transcript);
+  // After the frequency, play a short song based on the transcribed sound
+  await playSongFromText(transcriptText);
 
         setIsProcessing(false);
       };
@@ -204,6 +178,22 @@ const GardenGuardian: React.FC = () => {
             <span className="text-sm text-gray-500 ml-2">
               ({Math.round(lastDetectedSound.confidence * 100)}% confidence)
             </span>
+          </div>
+        )}
+        {/* Transcription & Analysis Display */}
+        {transcriptionDisplay && (
+          <div className="mt-6 bg-gray-50 p-4 rounded-lg text-left">
+            <h3 className="text-md font-semibold mb-2">Transcription & Analysis</h3>
+            <p className="text-sm"><strong>Heard:</strong> "{transcriptionDisplay.transcript}"</p>
+            <p className="text-sm"><strong>Detected:</strong> {transcriptionDisplay.animalType} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
+            <p className="text-sm mb-2"><strong>Meaning:</strong> {transcriptionDisplay.meaning}</p>
+            {latestAnalysis && (
+              <div className="mt-2 text-sm text-gray-700">
+                <p className="font-medium">Dr. Mooolittle's Report:</p>
+                <p className="whitespace-pre-wrap">{latestAnalysis.report}</p>
+                <p className="mt-2">Growth freq: {latestAnalysis.growthFrequency} Hz — Deterrent freq: {latestAnalysis.deterrentFrequency} Hz</p>
+              </div>
+            )}
           </div>
         )}
       </div>
