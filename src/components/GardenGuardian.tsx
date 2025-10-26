@@ -119,6 +119,41 @@ const GardenGuardian: React.FC = () => {
         <p className="text-gray-700 italic font-bold" style={{ fontSize: '24px' }}>
           🎤 Speak into your microphone now!
         </p>
+
+        {/* Input Sound Display */}
+        <div className="xp-panel p-6 mt-6 text-center">
+          <p className="font-bold mb-4" style={{ fontSize: '22px' }}>📊 INPUT SOUND</p>
+          <div className="flex justify-center items-end gap-1 h-32 bg-gradient-to-b from-blue-200 to-blue-50 rounded-lg p-4">
+            {isRecording ? (
+              <>
+                {[...Array(12)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="bg-blue-600 rounded-sm"
+                    style={{
+                      width: '20px',
+                      height: `${Math.random() * 100 + 20}px`,
+                      animation: `wave 0.5s ease-in-out ${i * 0.05}s infinite`,
+                    }}
+                  />
+                ))}
+                <style>{`
+                  @keyframes wave {
+                    0%, 100% { height: 20px; }
+                    50% { height: 100px; }
+                  }
+                `}</style>
+              </>
+            ) : (
+              <div className="text-gray-500 font-bold" style={{ fontSize: '18px' }}>
+                {isProcessing ? '⏳ Processing audio...' : '🔇 No audio input'}
+              </div>
+            )}
+          </div>
+          <p className="text-gray-600 mt-3" style={{ fontSize: '14px' }}>
+            {isRecording ? '🔴 Recording... (3 seconds)' : 'Click RECORD to start capturing audio'}
+          </p>
+        </div>
       </div>
 
       {/* Transcription & Analysis Display */}
