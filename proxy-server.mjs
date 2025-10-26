@@ -26,8 +26,6 @@ if (!FISH_AUDIO_API_KEY) {
 
 app.post('/api/tts', async (req, res) => {
   try {
-    console.log('Received TTS request:', req.body);
-
     const response = await fetch('https://api.fish.audio/v1/tts', {
       method: 'POST',
       headers: {
@@ -40,7 +38,7 @@ app.post('/api/tts', async (req, res) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Fish Audio API error:', errorText);
+      console.error('Fish Audio API error:', response.status);
       return res.status(response.status).json({ error: errorText });
     }
 

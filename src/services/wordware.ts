@@ -2,8 +2,6 @@ export interface WordwareAnalysis {
   report: string;
   growthFrequency: number;
   growthSound: string;
-  deterrentFrequency: number;
-  deterrentSound: string;
 }
 
 export async function analyzeWithWordware(transcription: string): Promise<WordwareAnalysis> {
@@ -68,40 +66,35 @@ export async function analyzeWithWordware(transcription: string): Promise<Wordwa
 
 function parseWordwareResponse(response: string, transcription: string): WordwareAnalysis {
   const frequencyMatch = response.match(/(\d+)\s*Hz/g);
-  const soundMatch = response.match(/(Soothing|Gentle|Deep|Warm|Mystical|Grumbling|Angry|Hissing|Growling|Buzzing)\s+\w+/g);
+  const soundMatch = response.match(/(Soothing|Gentle|Deep|Warm|Mystical|Lush|Harmonic|Resonant|Melodic|Pulsing)\s+\w+/g);
 
-  const frequencies = frequencyMatch ? frequencyMatch.map(f => parseInt(f)) : [1000, 22000];
-  const sounds = soundMatch || ['Soothing Cello', 'Grumbling Badger'];
+  const frequencies = frequencyMatch ? frequencyMatch.map(f => parseInt(f)) : [1000];
+  const sounds = soundMatch || ['Soothing Cello'];
 
   return {
     report: response || fallbackAnalysis(transcription).report,
     growthFrequency: frequencies[0] || 1000,
-    growthSound: sounds[0] || 'Soothing Cello',
-    deterrentFrequency: frequencies[1] || 22000,
-    deterrentSound: sounds[1] || 'Grumbling Badger'
+    growthSound: sounds[0] || 'Soothing Cello'
   };
 }
 
 function fallbackAnalysis(transcription: string): WordwareAnalysis {
   const sounds = ['Soothing Cello', 'Gentle Harp', 'Deep Tuba', 'Warm Bassoon', 'Mystical Flute'];
-  const deterrents = ['Grumbling Badger', 'Angry Hawk', 'Hissing Snake', 'Growling Wolf', 'Buzzing Hornet'];
 
   const growthSound = sounds[Math.floor(Math.random() * sounds.length)];
-  const deterrentSound = deterrents[Math.floor(Math.random() * deterrents.length)];
   const growthFreq = Math.floor(Math.random() * 4000) + 1000;
-  const deterrentFreq = Math.floor(Math.random() * 8000) + 18000;
 
-  const report = `Fascinating! The '${transcription}' vocalization shows a clear Lactonic-Frequency-Modulation pattern.
+  const report = `🌱 Dr. Mooolittle's Bio-Acoustic Analysis 🌱
 
-For optimal growth, this plant requires a '${growthSound}' resonance at ${growthFreq} Hz to stimulate cellular 'moo-vement' and enhance photosynthetic efficiency.
+Analyzing the '${transcription}' vocalization... Fascinating! This sound exhibits optimal growth-promoting characteristics.
 
-To deter herbivorous pests, we must mimic its natural predator: a '${deterrentSound}' at ${deterrentFreq} Hz. This ultrasonic frequency will create an invisible acoustic barrier around your botanical specimens.`;
+For maximum botanical benefit, your plants require a '${growthSound}' resonance at ${growthFreq} Hz. This frequency stimulates cellular moo-vement, enhances photosynthetic efficiency, and promotes vigorous root development. 
+
+Your garden is about to experience unprecedented growth! 🌿✨`;
 
   return {
     report,
     growthFrequency: growthFreq,
-    growthSound,
-    deterrentFrequency: deterrentFreq,
-    deterrentSound
+    growthSound
   };
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Leaf, Shield, Volume2, VolumeX } from 'lucide-react';
 import { playGardenSound, playSongFromText, GardenResponse } from '../services/fishAudio';
 import { analyzeWithWordware } from '../services/wordware';
 import type { WordwareAnalysis } from '../services/wordware';
@@ -7,9 +6,7 @@ import { transcribeAudio, detectAnimal } from '../services/speechRecognition';
 
 const GardenGuardian: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
-  const [selectedMode, setSelectedMode] = useState<'grow' | 'guard'>('grow');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [lastDetectedSound, setLastDetectedSound] = useState<{ mode: 'grow' | 'guard' | null, confidence: number }>({ mode: null, confidence: 0 });
   const [transcriptionDisplay, setTranscriptionDisplay] = useState<{ transcript: string; animalType: string; meaning: string; confidence: number } | null>(null);
   const [latestAnalysis, setLatestAnalysis] = useState<WordwareAnalysis | null>(null);
 
@@ -54,21 +51,13 @@ const GardenGuardian: React.FC = () => {
   console.log('Wordware analysis:', analysis);
   setLatestAnalysis(analysis);
 
-        // Set the mode based on the frequency ranges in the analysis
-        const detectedMode = analysis.growthFrequency < 5000 ? 'grow' : 'guard';
-        setSelectedMode(detectedMode);
-
-        // Update last detected sound
-        setLastDetectedSound({
-          mode: detectedMode,
-          confidence: detectedMode === 'grow' ? 0.8 : 0.9 // High confidence in our scientific analysis!
-        });
+        // Set the mode to grow (only mode now)
+        // const detectedMode = 'grow';
 
         // Create the garden response from the Wordware analysis
         const gardenResponse: GardenResponse = {
           explanation: analysis.report,
-          frequency: detectedMode === 'grow' ? analysis.growthFrequency : analysis.deterrentFrequency,
-          mode: detectedMode as 'grow' | 'guard'
+          frequency: analysis.growthFrequency
         };
         
         console.log('Playing garden response:', gardenResponse);
@@ -101,102 +90,56 @@ const GardenGuardian: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border-2 border-green-200">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Bio-Acoustic Garden Guardian
-        </h2>
-        <p className="text-gray-600 mb-6">
-          Make an animal sound to generate either growth-promoting or pest-deterring frequencies
+    <div className="space-y-4">
+      <div className="text-center mb-6">
+        <p className="text-xs font-bold text-black mb-4">
+          Make ANY farm animal sound (cow, cat, goat) to unlock growth-promoting frequencies for your plants
         </p>
 
-        {/* Mode Selection */}
-        <div className="flex justify-center gap-4 mb-8">
-          <button
-            onClick={() => setSelectedMode('grow')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium ${
-              selectedMode === 'grow'
-                ? 'bg-green-500 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            <Leaf className="w-5 h-5" />
-            Grow Mode
-          </button>
-          <button
-            onClick={() => setSelectedMode('guard')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium ${
-              selectedMode === 'guard'
-                ? 'bg-red-500 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            <Shield className="w-5 h-5" />
-            Guard Mode
-          </button>
+        {/* Info Box */}
+        <div className="xp-panel p-4 mb-4 text-left text-xs text-black">
+          <p className="font-bold mb-2">💡 HOW IT WORKS:</p>
+          <p>Record your farm animal sound. Dr. Mooolittle analyzes it and generates a custom growth frequency for your plants!</p>
         </div>
 
         {/* Record Button */}
         <button
           onClick={startRecording}
           disabled={isProcessing}
-          className={`
-            relative w-32 h-32 rounded-full 
-            ${isRecording ? 'bg-red-500' : 'bg-blue-500'} 
-            ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90'}
-            text-white font-bold text-lg
-            transition-all duration-200
-            focus:outline-none focus:ring-4 focus:ring-blue-300
-          `}
+          className="xp-button-large text-lg font-bold mb-4"
+          style={{ width: '100%', padding: '12px 24px' }}
         >
           {isProcessing ? (
-            <div className="animate-spin rounded-full h-8 w-8 border-4 border-white border-t-transparent mx-auto" />
+            <span className="xp-loading inline-block">► PROCESSING...</span>
           ) : (
-            isRecording ? 'Recording...' : 'Record'
+            isRecording ? '◼ RECORDING...' : '► RECORD'
           )}
         </button>
 
-        <p className="text-sm text-gray-500 mt-4">
-          {selectedMode === 'grow'
-            ? "Make a friendly sound (like a gentle 'moo')"
-            : "Make a predator sound (like an angry 'moo-moo')"}
+        <p className="text-xs text-gray-700 italic font-bold">
+          🎤 Speak into your microphone now!
         </p>
+      </div>
 
-        {/* Sound Type Indicator */}
-        {lastDetectedSound.mode && (
-          <div className={`mt-6 flex items-center justify-center gap-2 ${
-            lastDetectedSound.mode === 'grow' ? 'text-green-600' : 'text-red-600'
-          }`}>
-            {lastDetectedSound.mode === 'grow' ? (
-              <Volume2 className="w-5 h-5" />
-            ) : (
-              <VolumeX className="w-5 h-5" />
-            )}
-            <span className="font-medium">
-              {lastDetectedSound.mode === 'grow' ? 'Friendly' : 'Threatening'} Sound Detected
-            </span>
-            <span className="text-sm text-gray-500 ml-2">
-              ({Math.round(lastDetectedSound.confidence * 100)}% confidence)
-            </span>
-          </div>
-        )}
-        {/* Transcription & Analysis Display */}
-        {transcriptionDisplay && (
-          <div className="mt-6 bg-gray-50 p-4 rounded-lg text-left">
-            <h3 className="text-md font-semibold mb-2">Transcription & Analysis</h3>
-            <p className="text-sm"><strong>Heard:</strong> "{transcriptionDisplay.transcript}"</p>
-            <p className="text-sm"><strong>Detected:</strong> {transcriptionDisplay.animalType} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
-            <p className="text-sm mb-2"><strong>Meaning:</strong> {transcriptionDisplay.meaning}</p>
+      {/* Transcription & Analysis Display */}
+      {transcriptionDisplay && (
+        <div className="xp-window">
+          <div className="xp-title-bar">🔍 SOUND ANALYSIS RESULTS</div>
+          <div className="bg-gray-300 p-4 space-y-3 text-left">
+            <p className="text-xs"><span className="font-bold">📢 HEARD:</span> "{transcriptionDisplay.transcript}"</p>
+            <p className="text-xs"><span className="font-bold">🦁 DETECTED:</span> {transcriptionDisplay.animalType.toUpperCase()} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
+            <p className="text-xs"><span className="font-bold">📝 MEANING:</span> {transcriptionDisplay.meaning}</p>
             {latestAnalysis && (
-              <div className="mt-2 text-sm text-gray-700">
-                <p className="font-medium">Dr. Mooolittle's Report:</p>
-                <p className="whitespace-pre-wrap">{latestAnalysis.report}</p>
-                <p className="mt-2">Growth freq: {latestAnalysis.growthFrequency} Hz — Deterrent freq: {latestAnalysis.deterrentFrequency} Hz</p>
+              <div className="xp-panel p-3 bg-blue-100 text-xs text-black space-y-2">
+                <p className="font-bold">🧪 DR. MOOOLITTLE'S REPORT:</p>
+                <p className="whitespace-pre-wrap text-xs leading-tight">{latestAnalysis.report}</p>
+                <p className="font-bold">📊 GROWTH FREQUENCY: {latestAnalysis.growthFrequency} Hz</p>
+                <p className="text-xs text-gray-700">🔊 Sound: {latestAnalysis.growthSound}</p>
               </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
