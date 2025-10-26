@@ -83,7 +83,7 @@ function SongPlayer({ songUrl, reportText }: SongPlayerProps) {
       <div className="flex items-center gap-3 mb-6">
         <Music className="w-8 h-8 text-purple-600" />
         <h2 className="text-2xl font-bold text-gray-800">
-          Dr. Mooolittle's Audio Report
+          Crazy Dave's Audio Report
         </h2>
       </div>
 
@@ -160,7 +160,7 @@ function SongPlayer({ songUrl, reportText }: SongPlayerProps) {
       <div className="mt-4 bg-purple-100 border border-purple-200 rounded-lg p-3">
         <p className="text-xs text-purple-800">
           🎵 This audio was generated using Fish Audio's advanced text-to-speech technology,
-          transforming Dr. Mooolittle's scientific analysis into spoken word.
+          transforming Crazy Dave's scientific analysis into spoken word.
         </p>
       </div>
     </div>

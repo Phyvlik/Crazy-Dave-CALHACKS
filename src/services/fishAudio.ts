@@ -1,6 +1,6 @@
 const FISH_AUDIO_API_KEY = 'a1565933c2f54de88f6c5991c73939bd';
 // Reference voice ID - Using Dave voice from Fish Audio
-// This is the voice model to use for Dr. Mooolittle's analysis
+// This is the voice model to use for Crazy Dave's analysis
 const REFERENCE_VOICE_ID = import.meta.env.VITE_FISH_REFERENCE_ID || '30c1f3e90f0f4a948baa2262531dc1c0';
 
 export async function generateBotanistSpeech(explanation: string): Promise<string | null> {
@@ -48,6 +48,7 @@ import * as Tone from 'tone';
 export interface GardenResponse {
   explanation: string;
   frequency: number;
+  mode?: 'grow' | 'guard';
 }
 
 export async function playGardenSound(response: GardenResponse): Promise<void> {

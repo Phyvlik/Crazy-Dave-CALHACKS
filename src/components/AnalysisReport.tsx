@@ -17,7 +17,7 @@ function AnalysisReport({ result }: AnalysisReportProps) {
 
       <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 mb-6">
         <p className="text-sm font-semibold text-emerald-800 mb-1">
-          Dr. Mooolittle, Bovine Bio-Acoustician
+          Crazy Dave, Bovine Bio-Acoustician
         </p>
         <p className="text-xs text-emerald-600">
           Certified in Lactonic-Frequency-Modulation Analysis

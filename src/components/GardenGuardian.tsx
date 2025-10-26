@@ -132,10 +132,13 @@ const GardenGuardian: React.FC = () => {
             <p style={{ fontSize: '22px' }}><span className="font-bold">{transcriptionDisplay.isFriend ? '👍 FRIEND' : '⚠️ NOT FRIEND'}</span>: {transcriptionDisplay.isFriend ? 'Welcome to the garden! 🌿' : 'Stay away from the plants! 🚫'}</p>
             {latestAnalysis && (
               <div className="xp-panel p-3 bg-blue-100 text-black space-y-2">
-                <p className="font-bold" style={{ fontSize: '24px' }}>🧪 DR. MOOOLITTLE'S REPORT:</p>
-                <p className="whitespace-pre-wrap leading-tight" style={{ fontSize: '20px' }}>{latestAnalysis.report}</p>
-                <p className="font-bold" style={{ fontSize: '24px' }}>📊 GROWTH FREQUENCY: {latestAnalysis.growthFrequency} Hz</p>
-                <p className="text-gray-700" style={{ fontSize: '20px' }}>🔊 Sound: {latestAnalysis.growthSound}</p>
+                {/* Analysis Display */}
+                <div className="xp-window mb-4">
+                  <p className="font-bold" style={{ fontSize: '24px' }}>🧪 CRAZY DAVE'S REPORT:</p>
+                  <p className="whitespace-pre-wrap leading-tight" style={{ fontSize: '20px' }}>{latestAnalysis.report}</p>
+                  <p className="font-bold" style={{ fontSize: '24px' }}>📊 GROWTH FREQUENCY: {latestAnalysis.growthFrequency} Hz</p>
+                  <p className="text-gray-700" style={{ fontSize: '20px' }}>🔊 Sound: {latestAnalysis.growthSound}</p>
+                </div>
               </div>
             )}
           </div>

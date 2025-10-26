@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { speakTextWithFishAudio } from '../services/fishAudio';
+import { generateBotanistSpeech } from '../services/fishAudio';
 
 const TestFishAudio: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -7,7 +7,11 @@ const TestFishAudio: React.FC = () => {
   const testAudio = async () => {
     setIsLoading(true);
     try {
-      await speakTextWithFishAudio("Hello! Welcome to Fish Audio. This is my first AI-generated voice.");
+      const url = await generateBotanistSpeech("Hello! Welcome to Fish Audio. This is my first AI-generated voice.");
+      if (url) {
+        const audio = new Audio(url);
+        audio.play();
+      }
     } catch (error) {
       console.error('Error testing Fish Audio:', error);
     }

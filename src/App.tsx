@@ -47,9 +47,6 @@ function App() {
 
   return (
     <div className="xp-bg xp-pixel-grid min-h-screen relative overflow-hidden pb-20">
-      {/* Pixel Cloud in Blue Area */}
-      <div className="pixel-cloud"></div>
-
       {/* Pixel Flowers in Green Area */}
       <div className="pixel-flower"></div>
       <div className="pixel-flower"></div>

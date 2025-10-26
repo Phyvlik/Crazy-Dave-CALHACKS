@@ -6,7 +6,7 @@ Welcome to **Crazy Dave**, an interactive AI-powered garden guardian that listen
 
 🎤 **Real-Time Animal Sound Recognition** - Detects cow moos, goat bleats, cat meows, and sheep baas through your microphone
 
-🤖 **Dr. Mooolittle AI Analysis** - Get personalized plant care recommendations powered by Wordware AI with a personality as vibrant as Dave himself
+🤖 **Crazy Dave AI Analysis** - Get personalized plant care recommendations powered by Wordware AI with a personality as vibrant as Dave himself
 
 🎙️ **Natural Voice Synthesis** - Hear Dave speak your garden advice with natural, expressive speech using Fish Audio's advanced TTS
 
@@ -65,7 +65,7 @@ The app will be available at `http://localhost:5179`
 
 1. **Make an animal sound** - Click "Start Recording" and make a cow moo, goat bleat, cat meow, or sheep baa sound
 2. **Dave listens** - The app transcribes your sound and identifies which animal you imitated
-3. **Get advice** - Dr. Mooolittle analyzes your animal sound and provides hilarious yet helpful plant care wisdom
+3. **Get advice** - Crazy Dave analyzes your animal sound and provides hilarious yet helpful plant care wisdom
 4. **Hear Dave speak** - Your advice is read aloud by Dave with natural, expressive speech
 5. **Enjoy the melody** - After Dave finishes, a unique melody is generated based on the advice text
 6. **Repeat & Garden** - Keep interacting and build your plant care knowledge with Dave!
@@ -116,7 +116,7 @@ Speech Recognition (Browser API)
     ↓
 Animal Type Detection
     ↓
-Wordware AI Analysis (Dr. Mooolittle)
+Wordware AI Analysis (Crazy Dave)
     ↓
 Dave's Voice Generation (Fish Audio + proxy)
     ↓
@@ -146,7 +146,7 @@ Output to User
 
 **wordware.ts** - Gets AI-powered plant advice:
 - Calls Wordware streaming API
-- Uses Dr. Mooolittle persona for fun responses
+- Uses Crazy Dave persona for fun responses
 - Returns streaming text responses
 
 ## 🎯 Use Cases
