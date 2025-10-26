@@ -90,7 +90,7 @@ export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' 
       partial: ['sheep', 'baa', 'bleat', 'meh']
     },
     cat: {
-      exact: ['meow', 'miao', 'purr', 'meaow'],
+      exact: ['meow', 'miao', 'purr', 'meaow', 'meeyaw', 'meeyow', 'meeeya', 'myaw', 'meeyav', 'myav'],
       partial: ['cat', 'meow', 'purr']
     },
     cow: {

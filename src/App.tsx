@@ -16,7 +16,7 @@ function App() {
     return (
       <div className="xp-bg xp-pixel-grid fixed inset-0 flex items-center justify-center">
         <div className="xp-window p-16 text-center max-w-2xl" style={{ background: 'linear-gradient(to bottom, #7CB342, #558B2F)' }}>
-          <div className="xp-title-bar mb-8 text-lg font-bold">🚀 Loading Crazy Dave v1.0...</div>
+          <div className="xp-title-bar mb-8 text-lg font-bold" style={{ fontSize: '24px' }}>🚀 Loading Crazy Dave v1.0...</div>
           <div className="space-y-8">
             <img 
               src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDNtZmFyN2xlZHVwdjluZ3hlMWF0eXZycTNsMHR2dGxrZWIxM256diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vp3ftHKvKpASA/giphy.gif"
@@ -26,15 +26,16 @@ function App() {
             <div className="text-9xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
               🐄
             </div>
-            <p className="text-2xl text-white font-black" style={{ fontFamily: "'Press Start 2P', monospace", textShadow: '3px 3px 0 #000' }}>INITIALIZING MOO-SIC SYSTEM</p>
-            <p className="text-sm text-white font-bold">Syncing with botanical frequencies...</p>
+            <p className="text-white font-black" style={{ fontFamily: "'Press Start 2P', monospace", textShadow: '3px 3px 0 #000', fontSize: '32px' }}>INITIALIZING MOO-SIC SYSTEM</p>
+            <p className="text-white font-bold" style={{ fontSize: '28px' }}>Syncing with botanical frequencies...</p>
             <div className="xp-progress">
               <div className="xp-progress-bar w-3/4"></div>
             </div>
-            <p className="text-xs text-white italic font-bold">⏳ Loading brain cells... Please wait</p>
+            <p className="text-white italic font-bold" style={{ fontSize: '24px' }}>⏳ Loading brain cells... Please wait</p>
             <button
               onClick={handleBootComplete}
               className="xp-button-large mt-8 w-full text-xl py-4 font-bold"
+              style={{ fontSize: '28px' }}
             >
               [► CONTINUE ◄]
             </button>
@@ -72,10 +73,10 @@ function App() {
               <h1 className="xp-heading-lg text-center text-5xl">
                 🐄 CRAZY DAVE 🐄
               </h1>
-              <p className="text-center text-lg font-black text-white" style={{ letterSpacing: '3px', textShadow: '2px 2px 0 #000' }}>
+              <p className="text-center font-black text-white" style={{ letterSpacing: '3px', textShadow: '2px 2px 0 #000', fontSize: '56px' }}>
                 ♫ MOO-SIC FOR YOUR PLANTS ♫
               </p>
-              <p className="text-center text-sm font-bold text-white" style={{ textShadow: '1px 1px 0 #000' }}>
+              <p className="text-center font-bold text-white" style={{ textShadow: '1px 1px 0 #000', fontSize: '42px' }}>
                 Your animals talk. Your plants listen. We translate.
               </p>
             </div>
@@ -84,7 +85,7 @@ function App() {
             <div className="xp-window">
               <div className="xp-title-bar">💡 HOW IT WORKS</div>
               <div className="bg-gray-300 p-4 space-y-3" style={{ background: 'linear-gradient(to bottom, #7CB342, #558B2F)' }}>
-                <p className="text-sm font-bold text-white" style={{ textShadow: '1px 1px 0 #000', lineHeight: '1.5' }}>
+                <p className="font-bold text-white" style={{ textShadow: '1px 1px 0 #000', lineHeight: '1.5', fontSize: '28px' }}>
                   Make ANY farm animal sound (cow, cat, goat) to unlock growth-promoting frequencies for your plants
                 </p>
               </div>
@@ -108,7 +109,7 @@ function App() {
                     <h2 className="text-2xl font-black text-white" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '16px', letterSpacing: '1px', textShadow: '2px 2px 0 #000' }}>
                       ► ABSTRACT ◄
                     </h2>
-                    <p className="text-xs text-white leading-relaxed font-bold" style={{ textShadow: '1px 1px 0 #000' }}>
+                    <p className="text-white leading-relaxed font-bold" style={{ textShadow: '1px 1px 0 #000', fontSize: '24px' }}>
                       This groundbreaking research explores bio-acoustics & phytobiology through innovative AI-driven analysis. Our proprietary system decodes animal vocalizations into optimized growth-promoting frequencies! 🌱
                     </p>
                   </div>
@@ -118,7 +119,7 @@ function App() {
                 <div className="xp-window bg-yellow-100 border-4 border-red-600">
                   <div className="xp-title-bar bg-red-600 text-white">⚠️ ⚠️ CRITICAL DISCLAIMER ⚠️ ⚠️</div>
                   <div className="bg-gray-300 p-3">
-                    <p className="text-sm font-black text-red-700">
+                    <p className="font-black text-red-700" style={{ fontSize: '24px' }}>
                       🔴 DISCLAIMER: Zero cows took emotional damage in the making of this hack.
                     </p>
                   </div>
@@ -126,7 +127,7 @@ function App() {
 
                 {/* Keywords */}
                 <div className="xp-panel p-3 bg-emerald-100">
-                  <p className="text-xs font-black text-green-900">
+                  <p className="font-black text-green-900" style={{ fontSize: '22px' }}>
                     📋 KEYWORDS: Bio-acoustics | Plant Growth | AI Analysis | Wordware | Fish Audio | Pseudo-Science 🚀
                   </p>
                 </div>
@@ -138,7 +139,7 @@ function App() {
 
         {/* Footer Window */}
         <div className="xp-window" style={{ background: 'linear-gradient(to bottom, #7CB342, #558B2F)' }}>
-          <div className="xp-title-bar">📋 STATUS BAR</div>
+          <div className="xp-title-bar" style={{ fontSize: '20px' }}>📋 STATUS BAR</div>
           <div className="bg-gray-300 p-3" style={{ background: 'linear-gradient(to bottom, #7CB342, #558B2F)' }}>
             <Footer />
           </div>

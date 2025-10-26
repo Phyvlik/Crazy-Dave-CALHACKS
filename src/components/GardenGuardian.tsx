@@ -92,14 +92,14 @@ const GardenGuardian: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <p className="text-xs font-bold text-black mb-4">
+        <p className="font-bold text-black mb-4" style={{ fontSize: '28px' }}>
           Make ANY farm animal sound (cow, cat, goat) to unlock growth-promoting frequencies for your plants
         </p>
 
         {/* Info Box */}
-        <div className="xp-panel p-4 mb-4 text-left text-xs text-black">
-          <p className="font-bold mb-2">💡 HOW IT WORKS:</p>
-          <p>Record your farm animal sound. Dr. Mooolittle analyzes it and generates a custom growth frequency for your plants!</p>
+        <div className="xp-panel p-4 mb-4 text-left text-black">
+          <p className="font-bold mb-2" style={{ fontSize: '28px' }}>💡 HOW IT WORKS:</p>
+          <p style={{ fontSize: '26px' }}>Record your farm animal sound. Dr. Mooolittle analyzes it and generates a custom growth frequency for your plants!</p>
         </div>
 
         {/* Record Button */}
@@ -107,7 +107,7 @@ const GardenGuardian: React.FC = () => {
           onClick={startRecording}
           disabled={isProcessing}
           className="xp-button-large text-lg font-bold mb-4"
-          style={{ width: '100%', padding: '12px 24px' }}
+          style={{ width: '100%', padding: '12px 24px', fontSize: '24px' }}
         >
           {isProcessing ? (
             <span className="xp-loading inline-block">► PROCESSING...</span>
@@ -116,7 +116,7 @@ const GardenGuardian: React.FC = () => {
           )}
         </button>
 
-        <p className="text-xs text-gray-700 italic font-bold">
+        <p className="text-gray-700 italic font-bold" style={{ fontSize: '24px' }}>
           🎤 Speak into your microphone now!
         </p>
       </div>
@@ -124,17 +124,17 @@ const GardenGuardian: React.FC = () => {
       {/* Transcription & Analysis Display */}
       {transcriptionDisplay && (
         <div className="xp-window">
-          <div className="xp-title-bar">🔍 SOUND ANALYSIS RESULTS</div>
+          <div className="xp-title-bar" style={{ fontSize: '20px' }}>🔍 SOUND ANALYSIS RESULTS</div>
           <div className="bg-gray-300 p-4 space-y-3 text-left">
-            <p className="text-xs"><span className="font-bold">📢 HEARD:</span> "{transcriptionDisplay.transcript}"</p>
-            <p className="text-xs"><span className="font-bold">🦁 DETECTED:</span> {transcriptionDisplay.animalType.toUpperCase()} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
-            <p className="text-xs"><span className="font-bold">📝 MEANING:</span> {transcriptionDisplay.meaning}</p>
+            <p style={{ fontSize: '22px' }}><span className="font-bold">📢 HEARD:</span> "{transcriptionDisplay.transcript}"</p>
+            <p style={{ fontSize: '22px' }}><span className="font-bold">🦁 DETECTED:</span> {transcriptionDisplay.animalType.toUpperCase()} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
+            <p style={{ fontSize: '22px' }}><span className="font-bold">📝 MEANING:</span> {transcriptionDisplay.meaning}</p>
             {latestAnalysis && (
-              <div className="xp-panel p-3 bg-blue-100 text-xs text-black space-y-2">
-                <p className="font-bold">🧪 DR. MOOOLITTLE'S REPORT:</p>
-                <p className="whitespace-pre-wrap text-xs leading-tight">{latestAnalysis.report}</p>
-                <p className="font-bold">📊 GROWTH FREQUENCY: {latestAnalysis.growthFrequency} Hz</p>
-                <p className="text-xs text-gray-700">🔊 Sound: {latestAnalysis.growthSound}</p>
+              <div className="xp-panel p-3 bg-blue-100 text-black space-y-2">
+                <p className="font-bold" style={{ fontSize: '24px' }}>🧪 DR. MOOOLITTLE'S REPORT:</p>
+                <p className="whitespace-pre-wrap leading-tight" style={{ fontSize: '20px' }}>{latestAnalysis.report}</p>
+                <p className="font-bold" style={{ fontSize: '24px' }}>📊 GROWTH FREQUENCY: {latestAnalysis.growthFrequency} Hz</p>
+                <p className="text-gray-700" style={{ fontSize: '20px' }}>🔊 Sound: {latestAnalysis.growthSound}</p>
               </div>
             )}
           </div>

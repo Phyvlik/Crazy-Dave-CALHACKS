@@ -84,7 +84,7 @@ function fallbackAnalysis(transcription: string): WordwareAnalysis {
   const growthSound = sounds[Math.floor(Math.random() * sounds.length)];
   const growthFreq = Math.floor(Math.random() * 4000) + 1000;
 
-  const report = `🌱 Dr. Mooolittle's Bio-Acoustic Analysis 🌱
+  const report = ` Dr. Mooolittle's Bio-Acoustic Analysis 
 
 Analyzing the '${transcription}' vocalization... Fascinating! This sound exhibits optimal growth-promoting characteristics.
 
