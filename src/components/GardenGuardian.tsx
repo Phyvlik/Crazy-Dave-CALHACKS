@@ -123,43 +123,55 @@ const GardenGuardian: React.FC = () => {
         {/* Input Sound Display */}
         <div className="xp-panel p-6 mt-6 text-center">
           <p className="font-bold mb-4" style={{ fontSize: '22px' }}>📊 INPUT SOUND</p>
-          <div className="flex justify-center items-end gap-1 h-32 bg-gradient-to-b from-blue-200 to-blue-50 rounded-lg p-4">
+          <div className="flex justify-center items-end gap-2 h-48 bg-gradient-to-b from-blue-200 to-blue-50 rounded-lg p-6">
             {isRecording ? (
               <>
-                {[...Array(12)].map((_, i) => (
+                {[...Array(20)].map((_, i) => (
                   <div
                     key={i}
-                    className="bg-blue-600 rounded-sm"
+                    className="bg-gradient-to-t from-blue-600 to-blue-400 rounded-md shadow-lg"
                     style={{
-                      width: '20px',
-                      height: `${Math.random() * 100 + 20}px`,
-                      animation: `wave 0.5s ease-in-out ${i * 0.05}s infinite`,
+                      width: '24px',
+                      height: `${20 + (i % 3) * 30}px`,
+                      animation: `wave-${i % 4} 0.4s ease-in-out ${(i * 0.04)}s infinite`,
                     }}
                   />
                 ))}
                 <style>{`
-                  @keyframes wave {
-                    0%, 100% { height: 20px; }
-                    50% { height: 100px; }
+                  @keyframes wave-0 {
+                    0%, 100% { height: 20px; transform: scaleY(0.4); }
+                    50% { height: 160px; transform: scaleY(1); }
+                  }
+                  @keyframes wave-1 {
+                    0%, 100% { height: 30px; transform: scaleY(0.5); }
+                    50% { height: 170px; transform: scaleY(1); }
+                  }
+                  @keyframes wave-2 {
+                    0%, 100% { height: 40px; transform: scaleY(0.6); }
+                    50% { height: 180px; transform: scaleY(1); }
+                  }
+                  @keyframes wave-3 {
+                    0%, 100% { height: 25px; transform: scaleY(0.45); }
+                    50% { height: 165px; transform: scaleY(1); }
                   }
                 `}</style>
               </>
             ) : isProcessing && transcriptionDisplay ? (
-              <div className="text-center">
-                <p className="text-blue-700 font-bold" style={{ fontSize: '20px', marginBottom: '8px' }}>
-                  🎤 Transcribed: <span className="text-green-600">"{transcriptionDisplay.transcript}"</span>
+              <div className="text-center w-full">
+                <p className="text-blue-700 font-bold" style={{ fontSize: '22px', marginBottom: '8px' }}>
+                  🎤 Transcribed: <span className="text-green-600 font-black">"{transcriptionDisplay.transcript}"</span>
                 </p>
-                <p className="text-blue-600" style={{ fontSize: '16px' }}>
-                  ⏳ Analyzing...
+                <p className="text-blue-600 font-bold" style={{ fontSize: '18px' }}>
+                  ⏳ Analyzing... 🔍
                 </p>
               </div>
             ) : (
-              <div className="text-gray-500 font-bold" style={{ fontSize: '18px' }}>
+              <div className="text-gray-500 font-bold" style={{ fontSize: '20px' }}>
                 {isProcessing ? '⏳ Processing audio...' : '🔇 No audio input'}
               </div>
             )}
           </div>
-          <p className="text-gray-600 mt-3" style={{ fontSize: '14px' }}>
+          <p className="text-gray-600 mt-4 font-bold" style={{ fontSize: '16px' }}>
             {isRecording ? '🔴 Recording... (3 seconds)' : isProcessing ? '⏳ Processing and analyzing your sound...' : 'Click RECORD to start capturing audio'}
           </p>
         </div>
