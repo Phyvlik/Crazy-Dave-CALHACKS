@@ -2,9 +2,10 @@ export interface WordwareAnalysis {
   report: string;
   growthFrequency: number;
   growthSound: string;
+  isFriend?: boolean;
 }
 
-export async function analyzeWithWordware(transcription: string): Promise<WordwareAnalysis> {
+export async function analyzeWithWordware(transcription: string, isFriend?: boolean): Promise<WordwareAnalysis> {
   const apiKey = import.meta.env.VITE_WORDWARE_API_KEY;
   const promptId = import.meta.env.VITE_WORDWARE_PROMPT_ID;
 
@@ -57,14 +58,14 @@ export async function analyzeWithWordware(transcription: string): Promise<Wordwa
       }
     }
 
-    return parseWordwareResponse(fullResponse, transcription);
+    return parseWordwareResponse(fullResponse, transcription, isFriend);
   } catch (error) {
     console.error('Wordware analysis error:', error);
-    return fallbackAnalysis(transcription);
+    return fallbackAnalysis(transcription, isFriend);
   }
 }
 
-function parseWordwareResponse(response: string, transcription: string): WordwareAnalysis {
+function parseWordwareResponse(response: string, transcription: string, isFriend?: boolean): WordwareAnalysis {
   const frequencyMatch = response.match(/(\d+)\s*Hz/g);
   const soundMatch = response.match(/(Soothing|Gentle|Deep|Warm|Mystical|Lush|Harmonic|Resonant|Melodic|Pulsing)\s+\w+/g);
 
@@ -72,27 +73,37 @@ function parseWordwareResponse(response: string, transcription: string): Wordwar
   const sounds = soundMatch || ['Soothing Cello'];
 
   return {
-    report: response || fallbackAnalysis(transcription).report,
+    report: response || fallbackAnalysis(transcription, isFriend).report,
     growthFrequency: frequencies[0] || 1000,
-    growthSound: sounds[0] || 'Soothing Cello'
+    growthSound: sounds[0] || 'Soothing Cello',
+    isFriend
   };
 }
 
-function fallbackAnalysis(transcription: string): WordwareAnalysis {
-  const sounds = ['Soothing Cello', 'Gentle Harp', 'Deep Tuba', 'Warm Bassoon', 'Mystical Flute'];
+function fallbackAnalysis(transcription: string, isFriend?: boolean): WordwareAnalysis {
+  const friendSounds = ['Gentle Harp', 'Soothing Cello', 'Harmonic Flute', 'Warm Bassoon', 'Melodic Violin'];
+  const enemySounds = ['Death Metal', 'Heavy Electric Guitar', 'Distorted Bass', 'Pounding Drums', 'Chaotic Synth'];
 
+  const sounds = isFriend ? friendSounds : enemySounds;
   const growthSound = sounds[Math.floor(Math.random() * sounds.length)];
-  const growthFreq = Math.floor(Math.random() * 4000) + 1000;
+  const growthFreq = isFriend ? Math.floor(Math.random() * 2000) + 1000 : Math.floor(Math.random() * 3000) + 2000;
 
-  const report = `Crazy Dave Analysis 
+  const friendReport = `Crazy Dave Analysis 
 
   Analyzing the '${transcription}' vocalization... Fascinating! This sound like friend!
 
-  Dave feel happy and play his lovely music! Death Metal with 2782 Hz!`;
+  Dave feel happy and play his lovely music! ${growthSound} with ${growthFreq} Hz!`;
+
+  const enemyReport = `Crazy Dave Analysis 
+
+  Analyzing the '${transcription}' vocalization... OH NO! This sound like ENEMY!
+
+  Dave feel scared and play AGGRESSIVE music to protect garden! ${growthSound} with ${growthFreq} Hz!`;
 
   return {
-    report,
+    report: isFriend ? friendReport : enemyReport,
     growthFrequency: growthFreq,
-    growthSound
+    growthSound,
+    isFriend
   };
 }

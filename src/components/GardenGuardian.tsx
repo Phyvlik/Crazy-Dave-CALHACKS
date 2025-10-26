@@ -47,7 +47,7 @@ const GardenGuardian: React.FC = () => {
   setTranscriptionDisplay({ transcript: transcriptText, animalType: detected.animalType, meaning: detected.meaning, confidence: detected.confidence, isFriend: detected.isFriend });
 
   // Then analyze with Wordware to get our scientific response
-  const analysis = await analyzeWithWordware(transcriptText);
+  const analysis = await analyzeWithWordware(transcriptText, detected.isFriend);
   console.log('Wordware analysis:', analysis);
   setLatestAnalysis(analysis);
 
