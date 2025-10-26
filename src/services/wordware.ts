@@ -10,7 +10,7 @@ export async function analyzeWithWordware(transcription: string, isFriend?: bool
   const promptId = import.meta.env.VITE_WORDWARE_PROMPT_ID;
 
   if (!apiKey || !promptId || apiKey === 'your_wordware_api_key_here') {
-    return fallbackAnalysis(transcription);
+    return fallbackAnalysis(transcription, isFriend);
   }
 
   try {
