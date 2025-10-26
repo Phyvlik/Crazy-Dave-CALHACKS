@@ -144,6 +144,15 @@ const GardenGuardian: React.FC = () => {
                   }
                 `}</style>
               </>
+            ) : isProcessing && transcriptionDisplay ? (
+              <div className="text-center">
+                <p className="text-blue-700 font-bold" style={{ fontSize: '20px', marginBottom: '8px' }}>
+                  🎤 Transcribed: <span className="text-green-600">"{transcriptionDisplay.transcript}"</span>
+                </p>
+                <p className="text-blue-600" style={{ fontSize: '16px' }}>
+                  ⏳ Analyzing...
+                </p>
+              </div>
             ) : (
               <div className="text-gray-500 font-bold" style={{ fontSize: '18px' }}>
                 {isProcessing ? '⏳ Processing audio...' : '🔇 No audio input'}
@@ -151,7 +160,7 @@ const GardenGuardian: React.FC = () => {
             )}
           </div>
           <p className="text-gray-600 mt-3" style={{ fontSize: '14px' }}>
-            {isRecording ? '🔴 Recording... (3 seconds)' : 'Click RECORD to start capturing audio'}
+            {isRecording ? '🔴 Recording... (3 seconds)' : isProcessing ? '⏳ Processing and analyzing your sound...' : 'Click RECORD to start capturing audio'}
           </p>
         </div>
       </div>
