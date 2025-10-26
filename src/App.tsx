@@ -47,6 +47,17 @@ function App() {
 
   return (
     <div className="xp-bg xp-pixel-grid min-h-screen relative overflow-hidden pb-20">
+      {/* Pixel Cloud in Blue Area */}
+      <div className="pixel-cloud"></div>
+
+      {/* Pixel Flowers in Green Area */}
+      <div className="pixel-flower"></div>
+      <div className="pixel-flower"></div>
+      <div className="pixel-flower"></div>
+      <div className="pixel-flower"></div>
+      <div className="pixel-flower"></div>
+      <div className="pixel-flower"></div>
+
       {/* Desktop Container */}
       <div className="container mx-auto px-4 py-4 max-w-5xl relative z-10">
         
@@ -77,7 +88,7 @@ function App() {
                 ♫ MOO-SIC FOR YOUR PLANTS ♫
               </p>
               <p className="text-center font-bold text-white" style={{ textShadow: '1px 1px 0 #000', fontSize: '42px' }}>
-                Your animals talk. Your plants listen. We translate.
+                Friendly Animal Only!
               </p>
             </div>
 
@@ -128,7 +139,7 @@ function App() {
                 {/* Keywords */}
                 <div className="xp-panel p-3 bg-emerald-100">
                   <p className="font-black text-green-900" style={{ fontSize: '22px' }}>
-                    📋 KEYWORDS: Bio-acoustics | Plant Growth | AI Analysis | Wordware | Fish Audio | Pseudo-Science 🚀
+                    📋 KEYWORDS: Plant Growth | AI Analysis | Wordware | Fish Audio | Pseudo-Science 🚀
                   </p>
                 </div>
               </div>

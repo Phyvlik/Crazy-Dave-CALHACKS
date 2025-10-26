@@ -73,21 +73,21 @@ export async function transcribeAudio(audioBlob: Blob): Promise<string> {
 }
 
 // Simple mapping from common transcription words to animal types and a short meaning
-export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' | 'cat' | 'goat' | 'unknown'; confidence: number; meaning: string } {
+export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' | 'cat' | 'goat' | 'unknown'; confidence: number; meaning: string; isFriend: boolean } {
   const t = (transcript || '').toLowerCase().trim();
 
   // If no speech was detected, return unknown instead of defaulting to cow
-  if (!t || t.length < 2) return { animalType: 'unknown', confidence: 0, meaning: 'No sound detected' };
+  if (!t || t.length < 2) return { animalType: 'unknown', confidence: 0, meaning: 'No sound detected', isFriend: false };
 
   // Define animal keywords grouped by type
   const animalKeywords = {
     goat: {
-      exact: ['sui', 'siu', 'ronaldo', 'cristiano ronaldo', 'swee', 'swweee', 'siuu', 'siuuu'],
+      exact: ['sui', 'siu', 'ronaldo', 'cristiano ronaldo', 'swee', 'swweee', 'siuu', 'siuuu', 'shui', 'shu'],
       partial: ['ronaldo', 'cristiano', 'sui', 'siu', 'swee', 'goat', 'g.o.a.t']
     },
     sheep: {
-      exact: ['baa', 'baaa', 'bleat', 'meh', 'bahhh'],
-      partial: ['sheep', 'baa', 'bleat', 'meh']
+      exact: ['baa', 'baaa', 'bleat', 'meh', 'bahhh', 'baaaa', 'baaaaa', 'baah', 'beh', 'behhh'],
+      partial: ['sheep', 'baa', 'bleat', 'meh', 'baa', 'wool', 'flock', 'ewe', 'ram']
     },
     cat: {
       exact: ['meow', 'miao', 'purr', 'meaow', 'meeyaw', 'meeyow', 'meeeya', 'myaw', 'meeyav', 'myav'],
@@ -99,32 +99,34 @@ export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' 
     }
   };
 
-  const getMeaning = (animalType: string) => {
+  const getMeaning = (animalType: string): { meaning: string; isFriend: boolean } => {
     switch (animalType) {
       case 'goat':
-        return 'Cristiano Ronaldo - The G.O.A.T. (Greatest Of All Time)! ⚽🐐';
+        return { meaning: 'Cristiano Ronaldo - The G.O.A.T. (Greatest Of All Time)! ⚽🐐', isFriend: true };
       case 'sheep':
-        return 'Likely an ovine vocalization';
+        return { meaning: 'Likely an ovine vocalization', isFriend: false };
       case 'cat':
-        return 'Likely a feline vocalization';
+        return { meaning: 'Likely a feline vocalization', isFriend: true };
       case 'cow':
-        return 'Likely a bovine vocalization';
+        return { meaning: 'Likely a bovine vocalization', isFriend: false };
       default:
-        return 'Unknown or ambiguous sound';
+        return { meaning: 'Unknown or ambiguous sound', isFriend: false };
     }
   };
 
   // Step 1: Check GOAT exact matches FIRST (highest priority)
   for (const keyword of animalKeywords.goat.exact) {
     if (t === keyword) {
-      return { animalType: 'goat', confidence: 0.95, meaning: getMeaning('goat') };
+      const { meaning, isFriend } = getMeaning('goat');
+      return { animalType: 'goat', confidence: 0.95, meaning, isFriend };
     }
   }
 
   // Step 2: Check GOAT partial matches (BEFORE all other animals)
   for (const keyword of animalKeywords.goat.partial) {
     if (t.includes(keyword)) {
-      return { animalType: 'goat', confidence: 0.85, meaning: getMeaning('goat') };
+      const { meaning, isFriend } = getMeaning('goat');
+      return { animalType: 'goat', confidence: 0.85, meaning, isFriend };
     }
   }
 
@@ -132,7 +134,8 @@ export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' 
   for (const [animal, keywords] of Object.entries(animalKeywords)) {
     if (animal === 'goat') continue; // Skip goat, already checked
     if (keywords.exact.includes(t)) {
-      return { animalType: animal as 'cow' | 'sheep' | 'cat', confidence: 0.95, meaning: getMeaning(animal) };
+      const { meaning, isFriend } = getMeaning(animal);
+      return { animalType: animal as 'cow' | 'sheep' | 'cat', confidence: 0.95, meaning, isFriend };
     }
   }
 
@@ -140,23 +143,27 @@ export function detectAnimal(transcript: string): { animalType: 'cow' | 'sheep' 
   // Check SHEEP
   for (const keyword of animalKeywords.sheep.partial) {
     if (t.includes(keyword)) {
-      return { animalType: 'sheep', confidence: 0.85, meaning: getMeaning('sheep') };
+      const { meaning, isFriend } = getMeaning('sheep');
+      return { animalType: 'sheep', confidence: 0.85, meaning, isFriend };
     }
   }
 
   // Check CAT
   for (const keyword of animalKeywords.cat.partial) {
     if (t.includes(keyword)) {
-      return { animalType: 'cat', confidence: 0.85, meaning: getMeaning('cat') };
+      const { meaning, isFriend } = getMeaning('cat');
+      return { animalType: 'cat', confidence: 0.85, meaning, isFriend };
     }
   }
 
   // Check COW last (to avoid false positives with other animals)
   for (const keyword of animalKeywords.cow.partial) {
     if (t.includes(keyword)) {
-      return { animalType: 'cow', confidence: 0.85, meaning: getMeaning('cow') };
+      const { meaning, isFriend } = getMeaning('cow');
+      return { animalType: 'cow', confidence: 0.85, meaning, isFriend };
     }
   }
 
-  return { animalType: 'unknown', confidence: 0.5, meaning: 'Unknown or ambiguous sound' };
+  const { meaning, isFriend } = getMeaning('unknown');
+  return { animalType: 'unknown', confidence: 0.5, meaning, isFriend };
 }

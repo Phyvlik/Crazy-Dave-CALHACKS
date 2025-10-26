@@ -84,13 +84,11 @@ function fallbackAnalysis(transcription: string): WordwareAnalysis {
   const growthSound = sounds[Math.floor(Math.random() * sounds.length)];
   const growthFreq = Math.floor(Math.random() * 4000) + 1000;
 
-  const report = ` Dr. Mooolittle's Bio-Acoustic Analysis 
+  const report = `Crazy Dave Analysis 
 
-Analyzing the '${transcription}' vocalization... Fascinating! This sound exhibits optimal growth-promoting characteristics.
+  Analyzing the '${transcription}' vocalization... Fascinating! This sound like friend!
 
-For maximum botanical benefit, your plants require a '${growthSound}' resonance at ${growthFreq} Hz. This frequency stimulates cellular moo-vement, enhances photosynthetic efficiency, and promotes vigorous root development. 
-
-Your garden is about to experience unprecedented growth! 🌿✨`;
+  Dave feel happy and play his lovely music! Death Metal with 2782 Hz!`;
 
   return {
     report,

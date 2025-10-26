@@ -7,7 +7,7 @@ import { transcribeAudio, detectAnimal } from '../services/speechRecognition';
 const GardenGuardian: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [transcriptionDisplay, setTranscriptionDisplay] = useState<{ transcript: string; animalType: string; meaning: string; confidence: number } | null>(null);
+  const [transcriptionDisplay, setTranscriptionDisplay] = useState<{ transcript: string; animalType: string; meaning: string; confidence: number; isFriend: boolean } | null>(null);
   const [latestAnalysis, setLatestAnalysis] = useState<WordwareAnalysis | null>(null);
 
   const startRecording = async () => {
@@ -44,7 +44,7 @@ const GardenGuardian: React.FC = () => {
   // Detect probable animal type from the transcript
   const detected = detectAnimal(transcriptText);
   console.log('Detected animal from transcript:', detected);
-  setTranscriptionDisplay({ transcript: transcriptText, animalType: detected.animalType, meaning: detected.meaning, confidence: detected.confidence });
+  setTranscriptionDisplay({ transcript: transcriptText, animalType: detected.animalType, meaning: detected.meaning, confidence: detected.confidence, isFriend: detected.isFriend });
 
   // Then analyze with Wordware to get our scientific response
   const analysis = await analyzeWithWordware(transcriptText);
@@ -99,7 +99,7 @@ const GardenGuardian: React.FC = () => {
         {/* Info Box */}
         <div className="xp-panel p-4 mb-4 text-left text-black">
           <p className="font-bold mb-2" style={{ fontSize: '28px' }}>💡 HOW IT WORKS:</p>
-          <p style={{ fontSize: '26px' }}>Record your farm animal sound. Dr. Mooolittle analyzes it and generates a custom growth frequency for your plants!</p>
+          <p style={{ fontSize: '26px' }}>Record your farm animal sound. Crazy Dave analyzes it and generates a custom growth frequency for your plants!</p>
         </div>
 
         {/* Record Button */}
@@ -129,6 +129,7 @@ const GardenGuardian: React.FC = () => {
             <p style={{ fontSize: '22px' }}><span className="font-bold">📢 HEARD:</span> "{transcriptionDisplay.transcript}"</p>
             <p style={{ fontSize: '22px' }}><span className="font-bold">🦁 DETECTED:</span> {transcriptionDisplay.animalType.toUpperCase()} ({Math.round(transcriptionDisplay.confidence * 100)}%)</p>
             <p style={{ fontSize: '22px' }}><span className="font-bold">📝 MEANING:</span> {transcriptionDisplay.meaning}</p>
+            <p style={{ fontSize: '22px' }}><span className="font-bold">{transcriptionDisplay.isFriend ? '👍 FRIEND' : '⚠️ NOT FRIEND'}</span>: {transcriptionDisplay.isFriend ? 'Welcome to the garden! 🌿' : 'Stay away from the plants! 🚫'}</p>
             {latestAnalysis && (
               <div className="xp-panel p-3 bg-blue-100 text-black space-y-2">
                 <p className="font-bold" style={{ fontSize: '24px' }}>🧪 DR. MOOOLITTLE'S REPORT:</p>

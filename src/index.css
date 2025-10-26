@@ -26,6 +26,83 @@ html {
   min-height: 100vh;
 }
 
+/* ===== PIXEL CLOUD IN BLUE AREA ===== */
+.pixel-cloud {
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 80px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 4;
+  background-image: 
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px);
+  background-size: 10px 10px;
+  background-position: 
+    0px 0px,
+    10px 0px,
+    20px 0px,
+    30px 0px,
+    40px 0px,
+    50px 0px,
+    60px 0px,
+    70px 0px;
+  background-repeat: no-repeat;
+}
+
+.pixel-cloud::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 10px;
+  background-image: 
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px),
+    linear-gradient(90deg, #FFF 0%, #FFF 10px, transparent 10px);
+  background-size: 10px 10px;
+  background-position: 
+    0px 0px,
+    10px 0px,
+    20px 0px,
+    30px 0px,
+    40px 0px,
+    50px 0px,
+    60px 0px,
+    70px 0px;
+  background-repeat: no-repeat;
+  top: 10px;
+  left: 0;
+}
+
+/* ===== PIXEL FLOWERS IN GREEN AREA ===== */
+.pixel-flower {
+  position: fixed;
+  bottom: 8%;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.pixel-flower:nth-child(13) { left: 8%; background: #FF0000; }
+.pixel-flower:nth-child(14) { left: 18%; background: #FFD700; }
+.pixel-flower:nth-child(15) { left: 28%; background: #9400D3; }
+.pixel-flower:nth-child(16) { right: 8%; background: #FF0000; }
+.pixel-flower:nth-child(17) { right: 18%; background: #FFD700; }
+.pixel-flower:nth-child(18) { right: 28%; background: #9400D3; }
+
 body {
   @apply antialiased;
   background: transparent;

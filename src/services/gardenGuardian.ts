@@ -5,15 +5,15 @@ export async function analyzeGardenSound(mode: 'grow' | 'guard'): Promise<Garden
   // For now, we'll use fun pre-written responses
   const growthResponses = [
     {
-      explanation: "Fascinating! Your gentle vocalization produces alpha waves that match the natural resonance of growing leaves. I'll generate a 1432 Hz tone - the exact frequency of a happy plant's photosynthesis dance!",
+      explanation: "ALERT! Your vocalization just triggered the Ancient Defense Protocol! This specific frequency matches the battle cry of the Legendary Scarecrow Guardian - cows, goats, and rabbits DESPISE this sound! Activating 1432 Hz pest-dispersal frequency NOW!",
       frequency: 1432
     },
     {
-      explanation: "Incredible! That peaceful sound perfectly mimics the harmonious frequency of a garden in full bloom. Let me generate a 2314 Hz tone that will make your plants absolutely jubilant!",
+      explanation: "INCREDIBLE! You've just activated the Ultra-Sonic Predator Alarm that makes EVERY farm animal within a 5-mile radius panic! This frequency matches a wild wolf's hunting call in a frequency only animals can hear. Launching 2314 Hz chaos generator!",
       frequency: 2314
     },
     {
-      explanation: "Eureka! Your soothing vocalization matches the precise frequency of moonlight on dewdrops. I'll create a 3219 Hz growth-stimulating tone that your plants will absolutely adore!",
+      explanation: "PHENOMENAL! That's the EXACT acoustic signature of the Cyber-Enhanced Guard Dog crossed with a thousand angry bees! Every creature within earshot just got the message: THIS GARDEN IS GUARDED! Deploying 3219 Hz domination frequency!",
       frequency: 3219
     }
   ];
